@@ -57,8 +57,9 @@ public abstract class LivingEntityMixin extends Entity {
 
 	/**
 	 * Cancel the small boost upward when leaving a fluid while against the side of a block when swimming is enabled
+	 * also, i remove allow = 2, require = 2 after method, seemed to be causing crash?
 	 */
-	@ModifyExpressionValue(method = "travel", allow = 2, require = 2, at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;isFree(DDD)Z"))
+	@ModifyExpressionValue(method = "travelInFluid", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;isFree(DDD)Z"))
 	private boolean cancelLeaveFluidAssist(boolean original) {
 		if ((Object) this instanceof Player player) {
 			if (EventDispatcher.onPlayerSwim(player) == EventResult.SUCCESS) {
