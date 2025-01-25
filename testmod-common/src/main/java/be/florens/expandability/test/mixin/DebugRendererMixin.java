@@ -2,6 +2,7 @@ package be.florens.expandability.test.mixin;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.debug.DebugRenderer;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -17,7 +18,7 @@ public class DebugRendererMixin {
     @Shadow @Final public DebugRenderer.SimpleDebugRenderer collisionBoxRenderer;
 
     @Inject(method = "render", at = @At("HEAD"))
-    private void moreDebugRendering(PoseStack poseStack, MultiBufferSource.BufferSource bufferSource, double d, double e, double f, CallbackInfo ci) {
+    private void moreDebugRendering(PoseStack poseStack, Frustum frustum, MultiBufferSource.BufferSource bufferSource, double d, double e, double f, CallbackInfo ci) {
         // TODO: add keybinds
 //        this.waterDebugRenderer.render(poseStack, bufferSource, d, e, f);
 //        this.collisionBoxRenderer.render(poseStack, bufferSource, d, e, f);

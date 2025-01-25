@@ -17,7 +17,8 @@ public abstract class LocalPlayerMixin extends AbstractClientPlayer {
         super(arg, gameProfile);
     }
 
-    @ModifyExpressionValue(method = "aiStep", at = @At(value = "INVOKE", target = "Lnet/neoforged/neoforge/fluids/FluidType;isAir()Z"))
+    // todo: not sure if correct
+    @ModifyExpressionValue(method = "aiStep", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/player/LocalPlayer;isUnderWater()Z"))
     private boolean setIsAir(boolean original) {
         return Util.processEventResult(EventDispatcher.onPlayerSwim(this), false, true, original);
     }
@@ -32,7 +33,7 @@ public abstract class LocalPlayerMixin extends AbstractClientPlayer {
         return Util.processEventResult(EventDispatcher.onPlayerSwim(this), original);
     }
 
-    @ModifyExpressionValue(method = "aiStep", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/player/LocalPlayer;canSwimInFluidType(Lnet/neoforged/neoforge/fluids/FluidType;)Z"))
+    @ModifyExpressionValue(method = {"lambda$aiStep$0", "lambda$aiStep$1", "lambda$aiStep$2"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/client/player/LocalPlayer;canSwimInFluidType(Lnet/neoforged/neoforge/fluids/FluidType;)Z"))
     private boolean setCanSwimInFluidType(boolean original) {
         return Util.processEventResult(EventDispatcher.onPlayerSwim(this), original);
     }
