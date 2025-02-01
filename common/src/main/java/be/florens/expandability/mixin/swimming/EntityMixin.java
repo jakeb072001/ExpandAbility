@@ -21,8 +21,7 @@ public abstract class EntityMixin {
 
 	@Shadow public abstract boolean isInWater();
 
-	// had require = 4 after method, still don't know what it's for...
-	@ModifyExpressionValue(method = {"updateSwimming", "isVisuallyCrawling", "canSpawnSprintParticle", "move"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;isInWater()Z"))
+	@ModifyExpressionValue(method = {"updateSwimming", "isVisuallyCrawling", "canSpawnSprintParticle", "updateInWaterStateAndDoFluidPushing"}, require = 4, at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;isInWater()Z"))
 	private boolean setInWater(boolean original) {
 		if ((Object) this instanceof Player player) {
 			return Util.processEventResult(EventDispatcher.onPlayerSwim(player), original);

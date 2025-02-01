@@ -36,6 +36,7 @@ public abstract class BlockStateBaseMixin {
 
         double stepHeight = entity.getAttributeValue(Attributes.STEP_HEIGHT);
         VoxelShape fluidShape = Shapes.box(0.0, 0.0, 0.0, 1.0, fluidState.getHeight(blockGetter, blockPos), 1.0); // fluidState.getShape() is b u g g e d
+        //VoxelShape fluidShape = fluidState.getShape(blockGetter, blockPos);
 
         if (collisionContext.isAbove(fluidShape.move(0, -stepHeight, 0), blockPos, false)
                 && EventDispatcher.onLivingFluidCollision(entity, fluidState)) {

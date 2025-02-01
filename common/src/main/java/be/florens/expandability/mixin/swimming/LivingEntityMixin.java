@@ -24,7 +24,7 @@ public abstract class LivingEntityMixin extends Entity {
 	// TODO: baseTick stopRiding
 
 	// TODO: should be fine for forge compat
-	@ModifyExpressionValue(method = "aiStep", require = 2 /* TODO: do we want to target lava check? */, at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;getFluidHeight(Lnet/minecraft/tags/TagKey;)D"))
+	@ModifyExpressionValue(method = {"aiStep", "travelInFluid"}, require = 3 /* TODO: do we want to target lava check? */, at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;getFluidHeight(Lnet/minecraft/tags/TagKey;)D"))
 	private double setFluidHeight(double original) {
 		if ((Object) this instanceof Player player) {
 			EventResult shouldSwim = EventDispatcher.onPlayerSwim(player);
@@ -35,7 +35,7 @@ public abstract class LivingEntityMixin extends Entity {
 	}
 
 	// TODO: probably also need to do isInFluidType on forge!
-	@ModifyExpressionValue(method = {"travel", "aiStep", "checkFallDamage"}, require = 3, at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;isInWater()Z"))
+	@ModifyExpressionValue(method = {"travel", "travelInFluid", "aiStep", "checkFallDamage"}, require = 4, at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;isInWater()Z"))
 	private boolean setInWater(boolean original) {
 		if ((Object) this instanceof Player player) {
 			return Util.processEventResult(EventDispatcher.onPlayerSwim(player), original);
@@ -57,9 +57,8 @@ public abstract class LivingEntityMixin extends Entity {
 
 	/**
 	 * Cancel the small boost upward when leaving a fluid while against the side of a block when swimming is enabled
-	 * also, i remove allow = 2, require = 2 after method, seemed to be causing crash?
 	 */
-	@ModifyExpressionValue(method = "travelInFluid", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;isFree(DDD)Z"))
+	@ModifyExpressionValue(method = "travelInFluid", allow = 2, require = 1, at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;isFree(DDD)Z"))
 	private boolean cancelLeaveFluidAssist(boolean original) {
 		if ((Object) this instanceof Player player) {
 			if (EventDispatcher.onPlayerSwim(player) == EventResult.SUCCESS) {

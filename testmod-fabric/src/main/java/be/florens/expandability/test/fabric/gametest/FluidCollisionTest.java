@@ -55,6 +55,7 @@ public class FluidCollisionTest {
                 .thenSucceed();
     }
 
+    // failing
     @GameTest(template = "expandability:staircase")
     public void walkDownWaterStaircase_withCollisionEvent_reachesBottom(GameTestHelper helper) {
         Villager villager = helper.spawnWithNoFreeWill(EntityType.VILLAGER, STAIRCASE_TOP);
@@ -72,6 +73,7 @@ public class FluidCollisionTest {
                 .thenSucceed();
     }
 
+    // failing
     @GameTest(template = "expandability:staircase")
     public void walkUpWaterStaircase_withCollisionEvent_reachesTop(GameTestHelper helper) {
         Villager villager = helper.spawnWithNoFreeWill(EntityType.VILLAGER, STAIRCASE_BOTTOM);
